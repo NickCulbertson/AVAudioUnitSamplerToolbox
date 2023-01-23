@@ -1,0 +1,50 @@
+{
+  "pins" : [
+    {
+      "identity" : "controls",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AudioKit/Controls",
+      "state" : {
+        "branch" : "main",
+        "revision" : "6861a9380963378115856f0b9b54414a9ec5f1ad"
+      }
+    },
+    {
+      "identity" : "keyboard",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AudioKit/Keyboard",
+      "state" : {
+        "branch" : "main",
+        "revision" : "238ac6cf0f6efddfcd0ab8b41782377e2617d0a7"
+      }
+    },
+    {
+      "identity" : "midikit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/orchetect/MIDIKit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "2ec386d13acbbee7581834982d295cb222560cf8"
+      }
+    },
+    {
+      "identity" : "timecodekit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/orchetect/TimecodeKit",
+      "state" : {
+        "revision" : "a81074199873696ad5e06d2f67a24dd1a9bd7dd2",
+        "version" : "1.6.5"
+      }
+    },
+    {
+      "identity" : "tonic",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AudioKit/Tonic.git",
+      "state" : {
+        "revision" : "bd73003b0e6caa90fb1d71b57329b0d609b097ee",
+        "version" : "1.0.10"
+      }
+    }
+  ],
+  "version" : 2
+}
