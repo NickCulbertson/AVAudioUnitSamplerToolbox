@@ -133,7 +133,7 @@ struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
     var body: some View {
         ZStack {
-            RadialGradient(gradient: Gradient(colors: [.purple, .black]), center: .center, startRadius: 2, endRadius: 650).edgesIgnoringSafeArea(.all)
+            RadialGradient(gradient: Gradient(colors: [.pink, .black]), center: .center, startRadius: 2, endRadius: 650).edgesIgnoringSafeArea(.all)
             VStack {
                 HStack {
                     VStack {
