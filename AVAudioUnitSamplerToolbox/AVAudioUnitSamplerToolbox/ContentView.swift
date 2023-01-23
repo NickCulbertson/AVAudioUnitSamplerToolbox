@@ -6,11 +6,20 @@ import Controls
 import MIDIKit
 
 class AVAudioUnitSamplerClass: ObservableObject {
+    // Audio Engine
     let engine = AVAudioEngine()
     
+    // Sampler Instrument
     @Published var instrument = AVAudioUnitSampler()
+    
+    // Effects
     @Published var reverb = AVAudioUnitReverb()
     @Published var delay = AVAudioUnitDelay()
+    @Published var lowPassCutoff: Float = 127 {
+        didSet {
+            instrument.sendController(74, withValue: UInt8(lowPassCutoff), onChannel: 0)
+        }
+    }
     var limiter = AVAudioUnitEffect(audioComponentDescription:
                                         AudioComponentDescription(componentType:kAudioUnitType_Effect,
                                                                   componentSubType: kAudioUnitSubType_PeakLimiter,
@@ -18,12 +27,7 @@ class AVAudioUnitSamplerClass: ObservableObject {
                                                                   componentFlags: 0,
                                                                   componentFlagsMask: 0))
     
-    @Published var lowPassCutoff: Float = 127 {
-        didSet {
-            instrument.sendController(74, withValue: UInt8(lowPassCutoff), onChannel: 0)
-        }
-    }
-    
+    // MIDI Manager
     let midiManager = MIDIManager(
         clientName: "TestAppMIDIManager",
         model: "TestApp",
@@ -49,7 +53,8 @@ class AVAudioUnitSamplerClass: ObservableObject {
         // Set default values for Nodes
         // (the lowPassCutoff is a part of the sampler instrument)
         lowPassCutoff = 127
-        
+        delay.wetDryMix = 20
+        delay.delayTime = 0.3
         reverb.wetDryMix = 50
         reverb.loadFactoryPreset(.largeHall)
         
@@ -87,6 +92,7 @@ class AVAudioUnitSamplerClass: ObservableObject {
         
     }
     
+    // MIDI Events
     private func received(midiEvent: MIDIEvent) {
         switch midiEvent {
         case .noteOn(let payload):
@@ -104,9 +110,11 @@ class AVAudioUnitSamplerClass: ObservableObject {
         }
     }
     
+    //Keyboard Events
     func noteOn(pitch: Pitch, point: CGPoint) {
         instrument.startNote(UInt8(pitch.intValue), withVelocity: 127, onChannel: 0)
     }
+    
     func noteOff(pitch: Pitch) {
         instrument.stopNote(UInt8(pitch.intValue), onChannel: 0)
     }
