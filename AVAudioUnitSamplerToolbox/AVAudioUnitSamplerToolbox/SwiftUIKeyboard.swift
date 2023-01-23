@@ -8,14 +8,44 @@ struct SwiftUIKeyboard: View {
     var octaveCount: Int
     var noteOn: (Pitch, CGPoint) -> Void = { _, _ in }
     var noteOff: (Pitch)->Void
+    
     var body: some View {
         Keyboard(layout: .piano(pitchRange: Pitch(intValue: firstOctave * 12 + 24)...Pitch(intValue: firstOctave * 12 + octaveCount * 12 + 24)),
                  noteOn: noteOn, noteOff: noteOff){ pitch, isActivated in
-            KeyboardKey(pitch: pitch,
-                        isActivated: isActivated,
-                        text: "",
-                        pressedColor: Color.pink,
-                        flatTop: true)
+            SwiftUIKeyboardKey(pitch: pitch,
+                               isActivated: isActivated)
         }.cornerRadius(5)
     }
 }
+
+struct SwiftUIKeyboardKey: View {
+    @State var MIDIKeyPressed = [Bool](repeating: false, count: 128)
+    var pitch : Pitch
+    var isActivated : Bool
+    
+    var body: some View {
+        VStack{
+            KeyboardKey(pitch: pitch,
+                        isActivated: isActivated,
+                        text: "",
+                        whiteKeyColor: .white,
+                        blackKeyColor: .black,
+                        pressedColor:  .pink,
+                        flatTop: true,
+                        isActivatedExternally: MIDIKeyPressed[pitch.intValue])
+        }.onReceive(NotificationCenter.default.publisher(for: .MIDIKey), perform: { obj in
+                
+            if let userInfo = obj.userInfo, let info = userInfo["info"] as? Int, let val = userInfo["bool"] as? Bool {
+                self.MIDIKeyPressed[info] = val
+            }
+        })
+    }
+}
+
+extension NSNotification.Name {
+    static let keyNoteOn = Notification.Name("keyNoteOn")
+    static let keyNoteOff = Notification.Name("keyNoteOff")
+    static let MIDIKey = Notification.Name("MIDIKey")
+}
+
+

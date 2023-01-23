@@ -11,6 +11,8 @@ class AVAudioUnitSamplerClass: ObservableObject {
     
     // Sampler Instrument
     @Published var instrument = AVAudioUnitSampler()
+    @Published var firstOctave = 2
+    @Published var octaveCount = 2
     
     // Effects
     @Published var reverb = AVAudioUnitReverb()
@@ -102,10 +104,12 @@ class AVAudioUnitSamplerClass: ObservableObject {
         switch midiEvent {
         case .noteOn(let payload):
             print("Note On:", payload.note, payload.velocity, payload.channel)
-            instrument.startNote(UInt8(payload.note.number), withVelocity: UInt8(payload.velocity.midi1Value), onChannel: 0)
+            instrument.startNote(UInt8(min(127, payload.note.number)), withVelocity: UInt8(min(127, payload.velocity.midi1Value)), onChannel: 0)
+            NotificationCenter.default.post(name: .MIDIKey, object: nil, userInfo: ["info": Int(min(127, payload.note.number)), "bool": true])
         case .noteOff(let payload):
             print("Note Off:", payload.note, payload.velocity, payload.channel)
-            instrument.stopNote(UInt8(payload.note.number), onChannel: 0)
+            instrument.stopNote(UInt8(min(127, payload.note.number)), onChannel: 0)
+            NotificationCenter.default.post(name: .MIDIKey, object: nil, userInfo: ["info": Int(min(127, payload.note.number)), "bool": false])
         case .cc(let payload):
             print("CC:", payload.controller, payload.value, payload.channel)
         case .programChange(let payload):
@@ -161,7 +165,7 @@ struct ContentView: View {
                     }.frame(maxWidth:100)
                 }
                 Spacer()
-                SwiftUIKeyboard(firstOctave: 2, octaveCount: 2, noteOn: sampler.noteOn(pitch:point:), noteOff: sampler.noteOff).frame(maxHeight: 600)
+                SwiftUIKeyboard(firstOctave: sampler.firstOctave, octaveCount: sampler.octaveCount, noteOn: sampler.noteOn(pitch:point:), noteOff: sampler.noteOff)
             }
         }.onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
