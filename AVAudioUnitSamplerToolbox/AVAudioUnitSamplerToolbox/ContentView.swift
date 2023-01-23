@@ -15,6 +15,11 @@ class AVAudioUnitSamplerClass: ObservableObject {
     // Effects
     @Published var reverb = AVAudioUnitReverb()
     @Published var delay = AVAudioUnitDelay()
+    @Published var delayTime: Float = 0.3 {
+        didSet {
+            delay.delayTime = TimeInterval(delayTime)
+        }
+    }
     @Published var lowPassCutoff: Float = 127 {
         didSet {
             instrument.sendController(74, withValue: UInt8(lowPassCutoff), onChannel: 0)
@@ -128,14 +133,20 @@ struct ContentView: View {
             VStack {
                 HStack {
                     VStack {
-                        Text("Reverb\n\(sampler.reverb.wetDryMix, specifier: "%.2f")")
+                        Text("Reverb Mix\n\(sampler.reverb.wetDryMix, specifier: "%.2f")")
                             .multilineTextAlignment(.center)
                         SmallKnob(value: $sampler.reverb.wetDryMix, range: 0...100)
                     }.frame(maxWidth:100)
                     VStack {
-                        Text("Delay\n\(sampler.delay.wetDryMix, specifier: "%.2f")")
+                        Text("Delay Mix\n\(sampler.delay.wetDryMix, specifier: "%.2f")")
                             .multilineTextAlignment(.center)
                         SmallKnob(value: $sampler.delay.wetDryMix, range: 0...100)
+                        
+                    }.frame(maxWidth:100)
+                    VStack {
+                        Text("Delay Time\n\(sampler.delay.delayTime, specifier: "%.2f")")
+                            .multilineTextAlignment(.center)
+                        SmallKnob(value: $sampler.delayTime, range: 0...2)
                         
                     }.frame(maxWidth:100)
                     VStack {
