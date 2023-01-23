@@ -20,12 +20,12 @@ class AVAudioUnitSamplerClass: ObservableObject {
             instrument.sendController(74, withValue: UInt8(lowPassCutoff), onChannel: 0)
         }
     }
-    var limiter = AVAudioUnitEffect(audioComponentDescription:
-                                        AudioComponentDescription(componentType:kAudioUnitType_Effect,
-                                                                  componentSubType: kAudioUnitSubType_PeakLimiter,
-                                                                  componentManufacturer: kAudioUnitManufacturer_Apple,
-                                                                  componentFlags: 0,
-                                                                  componentFlagsMask: 0))
+    var limiter = AVAudioUnitEffect(audioComponentDescription: AudioComponentDescription(
+                                            componentType:kAudioUnitType_Effect,
+                                            componentSubType: kAudioUnitSubType_PeakLimiter,
+                                            componentManufacturer: kAudioUnitManufacturer_Apple,
+                                            componentFlags: 0,
+                                            componentFlagsMask: 0))
     
     // MIDI Manager
     let midiManager = MIDIManager(
