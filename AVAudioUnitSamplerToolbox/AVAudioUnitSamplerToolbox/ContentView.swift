@@ -6,66 +6,40 @@ import Controls
 
 struct ContentView: View {
     @StateObject var sampler = AVAudioUnitSamplerClass()
+    @State var knob1: Float = 50
+    @State var knob2: Float = 20
+    @State var knob3: Float = 0.3
+    @State var knob4: Float = 127
+    @State var knob5: Float = 0
     @Environment(\.scenePhase) var scenePhase
     @State private var showingPopover = false
+    
+    func updateKnobs(){
+        knob1 = sampler.engine.reverb.wetDryMix
+        knob2 = sampler.engine.delay.wetDryMix
+        knob3 = Float(sampler.engine.delay.delayTime)
+        knob4 = sampler.engine.lowPassCutoff
+        knob5 = sampler.engine.instrument.overallGain
+    }
+    
     var body: some View {
         ZStack {
             RadialGradient(gradient: Gradient(colors: [.pink, .black]), center: .center, startRadius: 2, endRadius: 650).edgesIgnoringSafeArea(.all)
             VStack {
                 HStack {
-                    VStack {
-                        Text("Reverb Mix\n\(sampler.reverb.wetDryMix, specifier: "%.2f")")
-                            .multilineTextAlignment(.center)
-                        SmallKnob(value: $sampler.reverb.wetDryMix, range: 0...100)
-                    }.frame(maxWidth:100)
-                    VStack {
-                        Text("Delay Mix\n\(sampler.delay.wetDryMix, specifier: "%.2f")")
-                            .multilineTextAlignment(.center)
-                        SmallKnob(value: $sampler.delay.wetDryMix, range: 0...100)
-                        
-                    }.frame(maxWidth:100)
-                    VStack {
-                        Text("Delay Time\n\(sampler.delay.delayTime, specifier: "%.2f")")
-                            .multilineTextAlignment(.center)
-                        SmallKnob(value: $sampler.delayTime, range: 0...2)
-                        
-                    }.frame(maxWidth:100)
-                    VStack {
-                        Text("Low Pass\n\(sampler.lowPassCutoff, specifier: "%.0f")")
-                            .multilineTextAlignment(.center)
-                        SmallKnob(value: $sampler.lowPassCutoff, range: 0...127)
-                    }.frame(maxWidth:100)
-                    VStack {
-                        Text("Volume\n\(sampler.instrument.overallGain, specifier: "%.2f")")
-                            .multilineTextAlignment(.center)
-                        SmallKnob(value: $sampler.instrument.overallGain, range: -12...12)
-                    }.frame(maxWidth:100)
-                    // Use this to as a MIDI Bluetooth connection view
-//                    Button("Connect MIDI Bluetooth") {
-//                        showingPopover.toggle()
-//                    }.popover(isPresented: $showingPopover) {
-//                        NavigationView {
-//                            BluetoothMIDIView()
-//                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                                .navigationTitle("Connect MIDI Bluetooth").navigationBarTitleDisplayMode(.inline).navigationBarItems(leading: Button(action: {showingPopover = false }) {
-//                                    HStack {
-//                                        Image(systemName: "chevron.left").imageScale(.large).foregroundColor(.white)
-//                                    }
-//                                }).frame(maxWidth:.infinity)
-//                        }.navigationViewStyle(.stack).frame(minWidth: 300, minHeight: 200)
-//                    }
+                    SwiftUIRack(knob1: $knob1, knob2: $knob2, knob3: $knob3, knob4: $knob4, knob5: $knob5, updateMIDIFilter: sampler.updateMIDIFilter(Param:knobNumber:)).padding(20)
                 }
                 Spacer()
                 SwiftUIKeyboard(firstOctave: sampler.firstOctave, octaveCount: sampler.octaveCount, noteOn: sampler.noteOn(pitch:point:), noteOff: sampler.noteOff)
             }
         }.onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
-                if !sampler.engine.isRunning {
-                    try? sampler.instrument.loadInstrument(at: Bundle.main.url(forResource: "Sounds/Instrument1", withExtension: "aupreset")!)
-                    try? sampler.engine.start()
+                if !sampler.engine.AVEngine.isRunning {
+                    try? sampler.engine.instrument.loadInstrument(at: Bundle.main.url(forResource: "Sounds/Instrument1", withExtension: "aupreset")!)
+                    try? sampler.engine.AVEngine.start()
                 }
             } else if newPhase == .background {
-                sampler.engine.stop()
+                sampler.engine.AVEngine.stop()
             }
         }.onReceive(NotificationCenter.default.publisher(for: AVAudioSession.routeChangeNotification)) { event in
             switch event.userInfo![AVAudioSessionRouteChangeReasonKey] as! UInt {
@@ -83,7 +57,7 @@ struct ContentView: View {
                 return
             }
             if type == .began {
-                self.sampler.engine.stop()
+                self.sampler.engine.AVEngine.stop()
             } else if type == .ended {
                 guard let optionsValue =
                         info[AVAudioSessionInterruptionOptionKey] as? UInt else {
@@ -95,20 +69,30 @@ struct ContentView: View {
             }
         }.onReceive(NotificationCenter.default.publisher(for: .knobUpdate), perform: { obj in
             if let userInfo = obj.userInfo, let info = userInfo["info"] as? UInt8, let knobnum = userInfo["knob"] as? Int {
-                print(info)
+//                if knobnum == 1 {
+//                    sampler.engine.lowPassCutoff = Float(info)
+//                }
                 if knobnum == 1 {
-                    sampler.lowPassCutoff = Float(info)
+                    knob1 = Float(info)
+                }else if knobnum == 2 {
+                    knob2 = Float(info)
+                }else if knobnum == 3 {
+                    knob3 = Float(info)
+                }else if knobnum == 4 {
+                    knob4 = Float(info)
+                }else if knobnum == 5 {
+                    knob5 = Float(info)
                 }
             }
         })
-        .onDisappear() { self.sampler.engine.stop() }
+        .onDisappear() { self.sampler.engine.AVEngine.stop() }
             .environmentObject(sampler.midiManager)
     }
     func reloadAudio() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            if !sampler.engine.isRunning {
-                try? sampler.instrument.loadInstrument(at: Bundle.main.url(forResource: "Sounds/Instrument1", withExtension: "aupreset")!)
-                try? sampler.engine.start()
+            if !sampler.engine.AVEngine.isRunning {
+                try? sampler.engine.instrument.loadInstrument(at: Bundle.main.url(forResource: "Sounds/Instrument1", withExtension: "aupreset")!)
+                sampler.engine.start()
             }
         }
     }

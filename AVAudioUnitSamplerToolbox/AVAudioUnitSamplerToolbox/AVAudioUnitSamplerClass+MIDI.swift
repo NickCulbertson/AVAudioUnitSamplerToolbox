@@ -40,17 +40,17 @@ extension AVAudioUnitSamplerClass {
         switch midiEvent {
         case .noteOn(let payload):
             print("Note On:", payload.note, payload.velocity, payload.channel)
-            instrument.startNote(payload.note.number.uInt8Value, withVelocity: payload.velocity.midi1Value.uInt8Value, onChannel: 0)
+            engine.instrument.startNote(payload.note.number.uInt8Value, withVelocity: payload.velocity.midi1Value.uInt8Value, onChannel: 0)
             NotificationCenter.default.post(name: .MIDIKey, object: nil, userInfo: ["info": payload.note.number.uInt8Value, "bool": true])
         case .noteOff(let payload):
             print("Note Off:", payload.note, payload.velocity, payload.channel)
-            instrument.stopNote(payload.note.number.uInt8Value, onChannel: 0)
+            engine.instrument.stopNote(payload.note.number.uInt8Value, onChannel: 0)
             NotificationCenter.default.post(name: .MIDIKey, object: nil, userInfo: ["info": payload.note.number.uInt8Value, "bool": false])
         case .cc(let payload):
             print("CC:", payload.controller, payload.value, payload.channel)
             if payload.controller == 74 {
-                instrument.sendController(74, withValue: payload.value.midi1Value.uInt8Value, onChannel: 0)
-                NotificationCenter.default.post(name: .knobUpdate, object: nil, userInfo: ["info": payload.value.midi1Value.uInt8Value, "knob": 1])
+                engine.instrument.sendController(74, withValue: payload.value.midi1Value.uInt8Value, onChannel: 0)
+                NotificationCenter.default.post(name: .knobUpdate, object: nil, userInfo: ["info": payload.value.midi1Value.uInt8Value, "knob": 4])
             }
         case .programChange(let payload):
             print("Program Change:", payload.program, payload.channel)
