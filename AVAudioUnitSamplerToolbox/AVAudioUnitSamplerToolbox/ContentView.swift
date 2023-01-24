@@ -104,12 +104,12 @@ class AVAudioUnitSamplerClass: ObservableObject {
         switch midiEvent {
         case .noteOn(let payload):
             print("Note On:", payload.note, payload.velocity, payload.channel)
-            instrument.startNote(UInt8(min(127, payload.note.number)), withVelocity: UInt8(min(127, payload.velocity.midi1Value)), onChannel: 0)
-            NotificationCenter.default.post(name: .MIDIKey, object: nil, userInfo: ["info": Int(min(127, payload.note.number)), "bool": true])
+            instrument.startNote(payload.note.number.uInt8Value, withVelocity: payload.velocity.midi1Value.uInt8Value, onChannel: 0)
+            NotificationCenter.default.post(name: .MIDIKey, object: nil, userInfo: ["info": payload.note.number.uInt8Value, "bool": true])
         case .noteOff(let payload):
             print("Note Off:", payload.note, payload.velocity, payload.channel)
-            instrument.stopNote(UInt8(min(127, payload.note.number)), onChannel: 0)
-            NotificationCenter.default.post(name: .MIDIKey, object: nil, userInfo: ["info": Int(min(127, payload.note.number)), "bool": false])
+            instrument.stopNote(payload.note.number.uInt8Value, onChannel: 0)
+            NotificationCenter.default.post(name: .MIDIKey, object: nil, userInfo: ["info": payload.note.number.uInt8Value, "bool": false])
         case .cc(let payload):
             print("CC:", payload.controller, payload.value, payload.channel)
         case .programChange(let payload):
