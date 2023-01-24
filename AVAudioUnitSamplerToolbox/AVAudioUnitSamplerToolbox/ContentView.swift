@@ -41,19 +41,19 @@ struct ContentView: View {
                         SmallKnob(value: $sampler.instrument.overallGain, range: -12...12)
                     }.frame(maxWidth:100)
                     // Use this to as a MIDI Bluetooth connection view
-                    Button("Connect MIDI Bluetooth") {
-                        showingPopover.toggle()
-                    }.popover(isPresented: $showingPopover) {
-                        NavigationView {
-                            BluetoothMIDIView()
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                .navigationTitle("Connect MIDI Bluetooth").navigationBarTitleDisplayMode(.inline).navigationBarItems(leading: Button(action: {showingPopover = false }) {
-                                    HStack {
-                                        Image(systemName: "chevron.left").imageScale(.large).foregroundColor(.white)
-                                    }
-                                }).frame(maxWidth:.infinity)
-                        }.navigationViewStyle(.stack).frame(minWidth: 300, minHeight: 200)
-                    }
+//                    Button("Connect MIDI Bluetooth") {
+//                        showingPopover.toggle()
+//                    }.popover(isPresented: $showingPopover) {
+//                        NavigationView {
+//                            BluetoothMIDIView()
+//                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                                .navigationTitle("Connect MIDI Bluetooth").navigationBarTitleDisplayMode(.inline).navigationBarItems(leading: Button(action: {showingPopover = false }) {
+//                                    HStack {
+//                                        Image(systemName: "chevron.left").imageScale(.large).foregroundColor(.white)
+//                                    }
+//                                }).frame(maxWidth:.infinity)
+//                        }.navigationViewStyle(.stack).frame(minWidth: 300, minHeight: 200)
+//                    }
                 }
                 Spacer()
                 SwiftUIKeyboard(firstOctave: sampler.firstOctave, octaveCount: sampler.octaveCount, noteOn: sampler.noteOn(pitch:point:), noteOff: sampler.noteOff)

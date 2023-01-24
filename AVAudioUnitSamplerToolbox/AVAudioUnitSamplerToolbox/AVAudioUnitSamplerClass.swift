@@ -7,7 +7,7 @@ class AVAudioUnitSamplerClass: ObservableObject {
     let engine = AVAudioEngine()
     
     // Sampler Instrument
-    var instrument = AVAudioUnitSampler()
+    @Published var instrument = AVAudioUnitSampler()
     @Published var firstOctave = 2
     @Published var octaveCount = 2
     
