@@ -45,6 +45,7 @@ struct SwiftUIKeyboardKey: View {
 extension NSNotification.Name {
     static let keyNoteOn = Notification.Name("keyNoteOn")
     static let keyNoteOff = Notification.Name("keyNoteOff")
+    static let knobUpdate = Notification.Name("knobUpdate")
     static let MIDIKey = Notification.Name("MIDIKey")
 }
 

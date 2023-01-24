@@ -19,6 +19,8 @@
 		5A5A6CF1297EB96A0017A3C7 /* SwiftUIKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5A6CF0297EB96A0017A3C7 /* SwiftUIKeyboard.swift */; };
 		5A5A6CF4297ECE4D0017A3C7 /* Controls in Frameworks */ = {isa = PBXBuildFile; productRef = 5A5A6CF3297ECE4D0017A3C7 /* Controls */; };
 		5A5A6CFF297EEB840017A3C7 /* MIDIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5A5A6CFE297EEB840017A3C7 /* MIDIKit */; };
+		5AA6E552298010EA0031C145 /* AVAudioUnitSamplerClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA6E551298010E90031C145 /* AVAudioUnitSamplerClass.swift */; };
+		5AA6E554298011510031C145 /* AVAudioUnitSamplerClass+MIDI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA6E553298011510031C145 /* AVAudioUnitSamplerClass+MIDI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,8 @@
 		5A5A6CEB297EB2CB0017A3C7 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
 		5A5A6CF0297EB96A0017A3C7 /* SwiftUIKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUIKeyboard.swift; sourceTree = "<group>"; };
 		5A5A6CF5297EDAA60017A3C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		5AA6E551298010E90031C145 /* AVAudioUnitSamplerClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAudioUnitSamplerClass.swift; sourceTree = "<group>"; };
+		5AA6E553298011510031C145 /* AVAudioUnitSamplerClass+MIDI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAudioUnitSamplerClass+MIDI.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +114,8 @@
 				5A5A6CC1297EB26A0017A3C7 /* AVAudioUnitSamplerToolboxApp.swift */,
 				5A5A6CF0297EB96A0017A3C7 /* SwiftUIKeyboard.swift */,
 				5A5A6CC3297EB26A0017A3C7 /* ContentView.swift */,
+				5AA6E551298010E90031C145 /* AVAudioUnitSamplerClass.swift */,
+				5AA6E553298011510031C145 /* AVAudioUnitSamplerClass+MIDI.swift */,
 				5A5A6CC5297EB26B0017A3C7 /* Assets.xcassets */,
 				5A5A6CC7297EB26B0017A3C7 /* Preview Content */,
 			);
@@ -283,8 +289,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A5A6CC4297EB26A0017A3C7 /* ContentView.swift in Sources */,
+				5AA6E554298011510031C145 /* AVAudioUnitSamplerClass+MIDI.swift in Sources */,
 				5A5A6CC2297EB26A0017A3C7 /* AVAudioUnitSamplerToolboxApp.swift in Sources */,
 				5A5A6CF1297EB96A0017A3C7 /* SwiftUIKeyboard.swift in Sources */,
+				5AA6E552298010EA0031C145 /* AVAudioUnitSamplerClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,10 +451,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AVAudioUnitSamplerToolbox/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = R6J85WRCEG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AVAudioUnitSamplerToolbox/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "The app uses Bluetooth to connect to Bluetooth MIDI keyboards.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -475,10 +484,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AVAudioUnitSamplerToolbox/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = R6J85WRCEG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AVAudioUnitSamplerToolbox/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "The app uses Bluetooth to connect to Bluetooth MIDI keyboards.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
