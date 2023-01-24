@@ -54,17 +54,17 @@ struct SwiftUIRack: View {
     var body: some View {
         HStack {
             Spacer()
-            SwiftUIKnob(updateMIDI1: updateMIDIFilter, knobNumber: 1 ,value: knob1, range: 0...100, title: "Reverb", places: "0").frame(maxWidth: 100, maxHeight: 90)
+            SwiftUIKnob(updateMIDI1: updateMIDIFilter, knobNumber: 1 ,value: knob1, range: 0...100, title: "Reverb", places: "0").frame(maxWidth: 120, maxHeight: 120)
             Spacer()
-            SwiftUIKnob(updateMIDI1: updateMIDIFilter, knobNumber: 2 ,value: knob2, range: 0...100, title: "Delay", places: "0").frame(maxWidth: 100, maxHeight: 90)
+            SwiftUIKnob(updateMIDI1: updateMIDIFilter, knobNumber: 2 ,value: knob2, range: 0...100, title: "Delay", places: "0").frame(maxWidth: 120, maxHeight: 120)
             Spacer()
             SwiftUIKnob(updateMIDI1: updateMIDIFilter, knobNumber: 3 ,value: knob3, range: 0...2, title: "Delay Time", places: "2")
-                .frame(maxWidth: 100, maxHeight: 90)
+                .frame(maxWidth: 120, maxHeight: 120)
             Spacer()
-            SwiftUIKnob(updateMIDI1: updateMIDIFilter, knobNumber: 4 ,value: knob4, range: 0...127, title: "Filter", places: "0").frame(maxWidth: 100, maxHeight: 90)
+            SwiftUIKnob(updateMIDI1: updateMIDIFilter, knobNumber: 4 ,value: knob4, range: 0...127, title: "Filter", places: "0").frame(maxWidth: 120, maxHeight: 120)
             Group{
                 Spacer()
-                SwiftUIKnob(updateMIDI1: updateMIDIFilter, knobNumber: 5 ,value: knob5, range: -12.0...12.0, title: "Volume", places: "2").frame(maxWidth: 100, maxHeight: 90)
+                SwiftUIKnob(updateMIDI1: updateMIDIFilter, knobNumber: 5 ,value: knob5, range: -12.0...12.0, title: "Volume", places: "2").frame(maxWidth: 120, maxHeight: 120)
                 Spacer()
             }
             
@@ -131,13 +131,12 @@ public struct SwiftUIKnob: View {
         }) { geo in
             //            GeometryReader { geometry in
             VStack {
-                Text("\(isShowingValue ? "\(String(format: "%0.\(places)f", value ))" : title)")
+                Text("\(isShowingValue ? "\(String(format: "%0.\(places)f", value ))" : title)").lineLimit(1)
                 
                 Image("knob1")
                     .resizable()
                     .scaledToFit()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 100, height: 100)
                     .rotationEffect(.degrees(320 * (isNegative ? Double((value - range.lowerBound) / (range.upperBound - range.lowerBound)) : Double(value / range.upperBound)) - 160))
                 
             }
