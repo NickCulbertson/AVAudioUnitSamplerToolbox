@@ -5,7 +5,7 @@ import Tonic
 import Controls
 
 struct ContentView: View {
-    @StateObject var sampler = AVAudioUnitSamplerClass()
+    @StateObject var viewConductor = AVAudioUnitSamplerClass()
     @State var knob1: Float = 50
     @State var knob2: Float = 20
     @State var knob3: Float = 0.3
@@ -15,11 +15,11 @@ struct ContentView: View {
     @State private var showingPopover = false
     
     func updateKnobs(){
-        knob1 = sampler.engine.reverb.wetDryMix
-        knob2 = sampler.engine.delay.wetDryMix
-        knob3 = Float(sampler.engine.delay.delayTime)
-        knob4 = sampler.engine.lowPassCutoff
-        knob5 = sampler.engine.instrument.overallGain
+        knob1 = viewConductor.engine.reverb.wetDryMix
+        knob2 = viewConductor.engine.delay.wetDryMix
+        knob3 = Float(viewConductor.engine.delay.delayTime)
+        knob4 = viewConductor.engine.lowPassCutoff
+        knob5 = viewConductor.engine.instrument.overallGain
     }
     
     var body: some View {
@@ -27,19 +27,19 @@ struct ContentView: View {
             RadialGradient(gradient: Gradient(colors: [.pink, .black]), center: .center, startRadius: 2, endRadius: 650).edgesIgnoringSafeArea(.all)
             VStack {
                 HStack {
-                    SwiftUIRack(knob1: $knob1, knob2: $knob2, knob3: $knob3, knob4: $knob4, knob5: $knob5, updateMIDIFilter: sampler.updateMIDIFilter(Param:knobNumber:)).padding(20)
+                    SwiftUIRack(knob1: $knob1, knob2: $knob2, knob3: $knob3, knob4: $knob4, knob5: $knob5, updateMIDIFilter: viewConductor.updateMIDIFilter(Param:knobNumber:)).padding(20)
                 }
                 Spacer()
-                SwiftUIKeyboard(firstOctave: sampler.firstOctave, octaveCount: sampler.octaveCount, noteOn: sampler.noteOn(pitch:point:), noteOff: sampler.noteOff)
+                SwiftUIKeyboard(firstOctave: viewConductor.firstOctave, octaveCount: viewConductor.octaveCount, noteOn: viewConductor.noteOn(pitch:point:), noteOff: viewConductor.noteOff)
             }
         }.onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
-                if !sampler.engine.AVEngine.isRunning {
-                    try? sampler.engine.instrument.loadInstrument(at: Bundle.main.url(forResource: "Sounds/Instrument1", withExtension: "aupreset")!)
-                    try? sampler.engine.AVEngine.start()
+                if !viewConductor.engine.AVEngine.isRunning {
+                    try? viewConductor.engine.instrument.loadInstrument(at: Bundle.main.url(forResource: "Sounds/Instrument1", withExtension: "aupreset")!)
+                    try? viewConductor.engine.AVEngine.start()
                 }
             } else if newPhase == .background {
-                sampler.engine.AVEngine.stop()
+                viewConductor.engine.AVEngine.stop()
             }
         }.onReceive(NotificationCenter.default.publisher(for: AVAudioSession.routeChangeNotification)) { event in
             switch event.userInfo![AVAudioSessionRouteChangeReasonKey] as! UInt {
@@ -57,7 +57,7 @@ struct ContentView: View {
                 return
             }
             if type == .began {
-                self.sampler.engine.AVEngine.stop()
+                self.viewConductor.engine.AVEngine.stop()
             } else if type == .ended {
                 guard let optionsValue =
                         info[AVAudioSessionInterruptionOptionKey] as? UInt else {
@@ -69,9 +69,6 @@ struct ContentView: View {
             }
         }.onReceive(NotificationCenter.default.publisher(for: .knobUpdate), perform: { obj in
             if let userInfo = obj.userInfo, let info = userInfo["info"] as? UInt8, let knobnum = userInfo["knob"] as? Int {
-//                if knobnum == 1 {
-//                    sampler.engine.lowPassCutoff = Float(info)
-//                }
                 if knobnum == 1 {
                     knob1 = Float(info)
                 }else if knobnum == 2 {
@@ -85,14 +82,14 @@ struct ContentView: View {
                 }
             }
         })
-        .onDisappear() { self.sampler.engine.AVEngine.stop() }
-            .environmentObject(sampler.midiManager)
+        .onDisappear() { self.viewConductor.engine.AVEngine.stop() }
+            .environmentObject(viewConductor.midiManager)
     }
     func reloadAudio() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            if !sampler.engine.AVEngine.isRunning {
-                try? sampler.engine.instrument.loadInstrument(at: Bundle.main.url(forResource: "Sounds/Instrument1", withExtension: "aupreset")!)
-                sampler.engine.start()
+            if !viewConductor.engine.AVEngine.isRunning {
+                try? viewConductor.engine.instrument.loadInstrument(at: Bundle.main.url(forResource: "Sounds/Instrument1", withExtension: "aupreset")!)
+                viewConductor.engine.start()
             }
         }
     }
