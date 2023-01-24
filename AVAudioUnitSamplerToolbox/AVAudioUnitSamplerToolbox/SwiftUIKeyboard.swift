@@ -34,19 +34,11 @@ struct SwiftUIKeyboardKey: View {
                         flatTop: true,
                         isActivatedExternally: MIDIKeyPressed[pitch.intValue])
         }.onReceive(NotificationCenter.default.publisher(for: .MIDIKey), perform: { obj in
-                
-            if let userInfo = obj.userInfo, let info = userInfo["info"] as? Int, let val = userInfo["bool"] as? Bool {
-                self.MIDIKeyPressed[info] = val
+            if let userInfo = obj.userInfo, let info = userInfo["info"] as? UInt8, let val = userInfo["bool"] as? Bool {
+                self.MIDIKeyPressed[Int(info)] = val
             }
         })
     }
-}
-
-extension NSNotification.Name {
-    static let keyNoteOn = Notification.Name("keyNoteOn")
-    static let keyNoteOff = Notification.Name("keyNoteOff")
-    static let knobUpdate = Notification.Name("knobUpdate")
-    static let MIDIKey = Notification.Name("MIDIKey")
 }
 
 

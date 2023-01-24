@@ -7,7 +7,7 @@ class AVAudioUnitSamplerClass: ObservableObject {
     let engine = AVAudioEngine()
     
     // Sampler Instrument
-    @Published var instrument = AVAudioUnitSampler()
+    var instrument = AVAudioUnitSampler()
     @Published var firstOctave = 2
     @Published var octaveCount = 2
     
@@ -31,7 +31,7 @@ class AVAudioUnitSamplerClass: ObservableObject {
                                             componentFlags: 0,
                                             componentFlagsMask: 0))
     
-    // MIDI Manager
+    // MIDI Manager (MIDI methods are in AVAudioUnitSampler+MIDI)
     let midiManager = MIDIManager(
         clientName: "TestAppMIDIManager",
         model: "TestApp",
@@ -77,4 +77,11 @@ class AVAudioUnitSamplerClass: ObservableObject {
     func noteOff(pitch: Pitch) {
         instrument.stopNote(UInt8(pitch.intValue), onChannel: 0)
     }
+}
+
+extension NSNotification.Name {
+    static let keyNoteOn = Notification.Name("keyNoteOn")
+    static let keyNoteOff = Notification.Name("keyNoteOff")
+    static let knobUpdate = Notification.Name("knobUpdate")
+    static let MIDIKey = Notification.Name("MIDIKey")
 }
