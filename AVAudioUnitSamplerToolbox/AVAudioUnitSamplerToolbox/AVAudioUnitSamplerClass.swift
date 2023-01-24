@@ -4,7 +4,7 @@ import MIDIKit
 
 class AVAudioUnitSamplerClass: ObservableObject {
     // Audio Engine
-    @Published var engine = AudioEngine()
+    var engine = AudioEngine()
     
     // Keyboard options
     @Published var firstOctave = 2

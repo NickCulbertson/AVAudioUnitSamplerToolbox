@@ -114,11 +114,11 @@
 			children = (
 				5A5A6CF5297EDAA60017A3C7 /* Info.plist */,
 				5A5A6CC1297EB26A0017A3C7 /* AVAudioUnitSamplerToolboxApp.swift */,
-				5A5A6CF0297EB96A0017A3C7 /* SwiftUIElements.swift */,
 				5A5A6CC3297EB26A0017A3C7 /* ContentView.swift */,
 				5AA6E555298026EE0031C145 /* AudioEngine.swift */,
 				5AA6E551298010E90031C145 /* AVAudioUnitSamplerClass.swift */,
 				5AA6E553298011510031C145 /* AVAudioUnitSamplerClass+MIDI.swift */,
+				5A5A6CF0297EB96A0017A3C7 /* SwiftUIElements.swift */,
 				5A5A6CC5297EB26B0017A3C7 /* Assets.xcassets */,
 				5A5A6CC7297EB26B0017A3C7 /* Preview Content */,
 			);
