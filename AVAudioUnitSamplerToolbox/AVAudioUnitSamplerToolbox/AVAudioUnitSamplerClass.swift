@@ -4,7 +4,7 @@ import MIDIKit
 
 class AVAudioUnitSamplerClass: ObservableObject {
     // Audio Engine
-    var engine = AudioEngine()
+    var conductor = AudioEngine()
     
     // Keyboard options
     @Published var firstOctave = 2
@@ -19,7 +19,7 @@ class AVAudioUnitSamplerClass: ObservableObject {
     
     init() {
         // Start the engine
-        engine.start()
+        conductor.start()
         
         // Set up MIDI
         MIDIConnect()
@@ -27,24 +27,24 @@ class AVAudioUnitSamplerClass: ObservableObject {
     
     //Keyboard Events
     func noteOn(pitch: Pitch, point: CGPoint) {
-        engine.instrument.startNote(UInt8(pitch.intValue), withVelocity: 127, onChannel: 0)
+        conductor.instrument.startNote(UInt8(pitch.intValue), withVelocity: 127, onChannel: 0)
     }
     
     func noteOff(pitch: Pitch) {
-        engine.instrument.stopNote(UInt8(pitch.intValue), onChannel: 0)
+        conductor.instrument.stopNote(UInt8(pitch.intValue), onChannel: 0)
     }
     
     func updateMIDIFilter(Param: AUValue, knobNumber: Int){
         if knobNumber == 1 {
-            engine.reverb.wetDryMix = Param
+            conductor.reverb.wetDryMix = Param
         } else if knobNumber == 2 {
-            engine.delay.wetDryMix = Param
+            conductor.delay.wetDryMix = Param
         } else if knobNumber == 3 {
-            engine.delay.delayTime = TimeInterval(Param)
+            conductor.delay.delayTime = TimeInterval(Param)
         } else if knobNumber == 4 {
-            engine.lowPassCutoff = Param
+            conductor.lowPassCutoff = Param
         } else if knobNumber == 5 {
-            engine.instrument.overallGain = Param
+            conductor.instrument.overallGain = Param
         }
     }
 }

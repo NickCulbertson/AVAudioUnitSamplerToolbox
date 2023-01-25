@@ -1,7 +1,7 @@
 import AVFoundation
 class AudioEngine: ObservableObject {
     // Audio Engine
-    let AVEngine = AVAudioEngine()
+    let engine = AVAudioEngine()
     
     // Sampler Instrument
     var instrument = AVAudioUnitSampler()
@@ -25,18 +25,19 @@ class AudioEngine: ObservableObject {
         componentManufacturer: kAudioUnitManufacturer_Apple,
         componentFlags: 0,
         componentFlagsMask: 0))
+    
     init() {
         // Attach Nodes to the Engine
-        AVEngine.attach(instrument)
-        AVEngine.attach(delay)
-        AVEngine.attach(reverb)
-        AVEngine.attach(limiter)
+        engine.attach(instrument)
+        engine.attach(delay)
+        engine.attach(reverb)
+        engine.attach(limiter)
         
         // Connect Nodes to the Engine's output
-        AVEngine.connect(instrument, to: reverb, format: nil)
-        AVEngine.connect(reverb, to: delay, format: nil)
-        AVEngine.connect(delay, to: limiter, format: nil)
-        AVEngine.connect(limiter, to: AVEngine.mainMixerNode, format: nil)
+        engine.connect(instrument, to: reverb, format: nil)
+        engine.connect(reverb, to: delay, format: nil)
+        engine.connect(delay, to: limiter, format: nil)
+        engine.connect(limiter, to: engine.mainMixerNode, format: nil)
         
         // Load AVAudioUnitSampler Instrument
         try? instrument.loadInstrument(at: Bundle.main.url(forResource: "Sounds/Instrument1", withExtension: "aupreset")!)
@@ -51,6 +52,6 @@ class AudioEngine: ObservableObject {
     }
     
     func start() {
-        try? AVEngine.start()
+        try? engine.start()
     }
 }

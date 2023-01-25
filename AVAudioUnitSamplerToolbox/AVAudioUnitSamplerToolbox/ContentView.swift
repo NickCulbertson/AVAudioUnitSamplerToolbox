@@ -15,11 +15,11 @@ struct ContentView: View {
     @State private var showingPopover = false
     
     func updateKnobs(){
-        knob1 = viewConductor.engine.reverb.wetDryMix
-        knob2 = viewConductor.engine.delay.wetDryMix
-        knob3 = Float(viewConductor.engine.delay.delayTime)
-        knob4 = viewConductor.engine.lowPassCutoff
-        knob5 = viewConductor.engine.instrument.overallGain
+        knob1 = viewConductor.conductor.reverb.wetDryMix
+        knob2 = viewConductor.conductor.delay.wetDryMix
+        knob3 = Float(viewConductor.conductor.delay.delayTime)
+        knob4 = viewConductor.conductor.lowPassCutoff
+        knob5 = viewConductor.conductor.instrument.overallGain
     }
     
     var body: some View {
@@ -34,12 +34,12 @@ struct ContentView: View {
             }
         }.onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
-                if !viewConductor.engine.AVEngine.isRunning {
-                    try? viewConductor.engine.instrument.loadInstrument(at: Bundle.main.url(forResource: "Sounds/Instrument1", withExtension: "aupreset")!)
-                    try? viewConductor.engine.AVEngine.start()
+                if !viewConductor.conductor.engine.isRunning {
+                    try? viewConductor.conductor.instrument.loadInstrument(at: Bundle.main.url(forResource: "Sounds/Instrument1", withExtension: "aupreset")!)
+                    try? viewConductor.conductor.engine.start()
                 }
             } else if newPhase == .background {
-                viewConductor.engine.AVEngine.stop()
+                viewConductor.conductor.engine.stop()
             }
         }.onReceive(NotificationCenter.default.publisher(for: AVAudioSession.routeChangeNotification)) { event in
             switch event.userInfo![AVAudioSessionRouteChangeReasonKey] as! UInt {
@@ -57,7 +57,7 @@ struct ContentView: View {
                 return
             }
             if type == .began {
-                self.viewConductor.engine.AVEngine.stop()
+                self.viewConductor.conductor.engine.stop()
             } else if type == .ended {
                 guard let optionsValue =
                         info[AVAudioSessionInterruptionOptionKey] as? UInt else {
@@ -82,14 +82,14 @@ struct ContentView: View {
                 }
             }
         })
-        .onDisappear() { self.viewConductor.engine.AVEngine.stop() }
-            .environmentObject(viewConductor.midiManager)
+        .onDisappear() { self.viewConductor.conductor.engine.stop() }
+        .environmentObject(viewConductor.midiManager)
     }
     func reloadAudio() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            if !viewConductor.engine.AVEngine.isRunning {
-                try? viewConductor.engine.instrument.loadInstrument(at: Bundle.main.url(forResource: "Sounds/Instrument1", withExtension: "aupreset")!)
-                viewConductor.engine.start()
+            if !viewConductor.conductor.engine.isRunning {
+                try? viewConductor.conductor.instrument.loadInstrument(at: Bundle.main.url(forResource: "Sounds/Instrument1", withExtension: "aupreset")!)
+                viewConductor.conductor.start()
             }
         }
     }
