@@ -5,7 +5,7 @@ import Tonic
 import Controls
 
 struct ContentView: View {
-    @StateObject var viewConductor = AVAudioUnitSamplerClass()
+    @StateObject var viewConductor = ViewConductor()
     @State var knob1: Float = 50
     @State var knob2: Float = 20
     @State var knob3: Float = 0.3

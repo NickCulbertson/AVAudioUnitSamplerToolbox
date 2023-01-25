@@ -19,9 +19,9 @@
 		5A5A6CF1297EB96A0017A3C7 /* SwiftUIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5A6CF0297EB96A0017A3C7 /* SwiftUIElements.swift */; };
 		5A5A6CF4297ECE4D0017A3C7 /* Controls in Frameworks */ = {isa = PBXBuildFile; productRef = 5A5A6CF3297ECE4D0017A3C7 /* Controls */; };
 		5A5A6CFF297EEB840017A3C7 /* MIDIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5A5A6CFE297EEB840017A3C7 /* MIDIKit */; };
-		5AA6E552298010EA0031C145 /* AVAudioUnitSamplerClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA6E551298010E90031C145 /* AVAudioUnitSamplerClass.swift */; };
-		5AA6E554298011510031C145 /* AVAudioUnitSamplerClass+MIDI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA6E553298011510031C145 /* AVAudioUnitSamplerClass+MIDI.swift */; };
-		5AA6E556298026EE0031C145 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA6E555298026EE0031C145 /* AudioEngine.swift */; };
+		5AA6E552298010EA0031C145 /* ViewConductor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA6E551298010E90031C145 /* ViewConductor.swift */; };
+		5AA6E554298011510031C145 /* ViewConductor+MIDI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA6E553298011510031C145 /* ViewConductor+MIDI.swift */; };
+		5AA6E556298026EE0031C145 /* Conductor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA6E555298026EE0031C145 /* Conductor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,9 +55,9 @@
 		5A5A6CEB297EB2CB0017A3C7 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
 		5A5A6CF0297EB96A0017A3C7 /* SwiftUIElements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUIElements.swift; sourceTree = "<group>"; };
 		5A5A6CF5297EDAA60017A3C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		5AA6E551298010E90031C145 /* AVAudioUnitSamplerClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAudioUnitSamplerClass.swift; sourceTree = "<group>"; };
-		5AA6E553298011510031C145 /* AVAudioUnitSamplerClass+MIDI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAudioUnitSamplerClass+MIDI.swift"; sourceTree = "<group>"; };
-		5AA6E555298026EE0031C145 /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
+		5AA6E551298010E90031C145 /* ViewConductor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewConductor.swift; sourceTree = "<group>"; };
+		5AA6E553298011510031C145 /* ViewConductor+MIDI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewConductor+MIDI.swift"; sourceTree = "<group>"; };
+		5AA6E555298026EE0031C145 /* Conductor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conductor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,9 +115,9 @@
 				5A5A6CF5297EDAA60017A3C7 /* Info.plist */,
 				5A5A6CC1297EB26A0017A3C7 /* AVAudioUnitSamplerToolboxApp.swift */,
 				5A5A6CC3297EB26A0017A3C7 /* ContentView.swift */,
-				5AA6E555298026EE0031C145 /* AudioEngine.swift */,
-				5AA6E551298010E90031C145 /* AVAudioUnitSamplerClass.swift */,
-				5AA6E553298011510031C145 /* AVAudioUnitSamplerClass+MIDI.swift */,
+				5AA6E555298026EE0031C145 /* Conductor.swift */,
+				5AA6E551298010E90031C145 /* ViewConductor.swift */,
+				5AA6E553298011510031C145 /* ViewConductor+MIDI.swift */,
 				5A5A6CF0297EB96A0017A3C7 /* SwiftUIElements.swift */,
 				5A5A6CC5297EB26B0017A3C7 /* Assets.xcassets */,
 				5A5A6CC7297EB26B0017A3C7 /* Preview Content */,
@@ -291,12 +291,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AA6E556298026EE0031C145 /* AudioEngine.swift in Sources */,
+				5AA6E556298026EE0031C145 /* Conductor.swift in Sources */,
 				5A5A6CC4297EB26A0017A3C7 /* ContentView.swift in Sources */,
-				5AA6E554298011510031C145 /* AVAudioUnitSamplerClass+MIDI.swift in Sources */,
+				5AA6E554298011510031C145 /* ViewConductor+MIDI.swift in Sources */,
 				5A5A6CC2297EB26A0017A3C7 /* AVAudioUnitSamplerToolboxApp.swift in Sources */,
 				5A5A6CF1297EB96A0017A3C7 /* SwiftUIElements.swift in Sources */,
-				5AA6E552298010EA0031C145 /* AVAudioUnitSamplerClass.swift in Sources */,
+				5AA6E552298010EA0031C145 /* ViewConductor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

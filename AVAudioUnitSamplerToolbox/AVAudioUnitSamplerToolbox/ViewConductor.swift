@@ -2,9 +2,9 @@ import AVFoundation
 import Tonic
 import MIDIKit
 
-class AVAudioUnitSamplerClass: ObservableObject {
+class ViewConductor: ObservableObject {
     // Audio Engine
-    var conductor = AudioEngine()
+    var conductor = Conductor()
     
     // Keyboard options
     @Published var firstOctave = 2

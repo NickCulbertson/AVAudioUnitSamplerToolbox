@@ -1,5 +1,5 @@
 import AVFoundation
-class AudioEngine: ObservableObject {
+class Conductor: ObservableObject {
     // Audio Engine
     let engine = AVAudioEngine()
     

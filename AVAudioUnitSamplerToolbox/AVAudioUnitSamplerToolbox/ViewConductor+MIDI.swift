@@ -3,7 +3,7 @@ import AVFoundation
 import Tonic
 import MIDIKit
 
-extension AVAudioUnitSamplerClass {
+extension ViewConductor {
     // Connect MIDI on init
     func MIDIConnect() {
         do {
