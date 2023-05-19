@@ -13,8 +13,7 @@ struct SwiftUIKeyboard: View {
     var body: some View {
         Keyboard(layout: .piano(pitchRange: Pitch(intValue: firstOctave * 12 + 24)...Pitch(intValue: firstOctave * 12 + octaveCount * 12 + 24)),
                  noteOn: noteOn, noteOff: noteOff){ pitch, isActivated in
-            SwiftUIKeyboardKey(pitch: pitch,
-                               isActivated: isActivated)
+            SwiftUIKeyboardKey(pitch: pitch,isActivated: isActivated).aspectRatio(0.25, contentMode: .fit)
         }.cornerRadius(5)
     }
 }
